@@ -6,36 +6,45 @@ Last updated: 2025-10-24
 
 Building a collaborative world-building platform (MVP) for creative writing students. See [specification.md](specification.md) for complete requirements.
 
-## Current Status: Create Kernel Functional (35% of MVP)
+## Current Status: Core Viewing Flow Complete (55% of MVP)
 
-### 🧪 Ready for Testing!
+### 🎉 Ready for Full Testing!
 
 **Complete end-to-end flow is now functional:**
 1. ✅ Sign up with email/password/username
 2. ✅ Log in to existing account
-3. ✅ Click "New Kernel" button in navigation
-4. ✅ Fill out kernel form (title, description, tags, license)
-5. ✅ Submit → saves to database → redirects to home
-6. ✅ Kernels are stored in Supabase (view in dashboard)
+3. ✅ View home feed with all kernels
+4. ✅ Click on any kernel to view full details
+5. ✅ See parent kernel (if forked)
+6. ✅ See child kernels (derivatives/forks)
+7. ✅ Create new kernels
+8. ✅ Fork attribution tracking
 
 **To test:**
 ```bash
 npm run dev
 # Visit http://localhost:3000
-# Create an account, then create a kernel!
+# Sign up → Create kernels → Browse feed → View details!
 ```
 
 **What's working:**
-- Full authentication flow
-- Kernel creation with validation
-- Data persistence to Supabase
-- Route protection
+- ✅ Full authentication flow
+- ✅ Home page feed with kernel cards
+- ✅ Kernel detail pages with full content
+- ✅ Parent/child kernel relationships displayed
+- ✅ Fork badges and fork counts
+- ✅ Tag display (clickable)
+- ✅ Author attribution with profile links
+- ✅ Empty states for no kernels
+- ✅ Route protection
+- ✅ Edit button for kernel owners
 
 **What's not ready yet:**
-- Home page feed (kernels are saved but not displayed)
-- Viewing individual kernels
-- Forking kernels
-- User profiles
+- Fork functionality (button exists but page not built)
+- Edit functionality (button exists but page not built)
+- User profiles (links exist but pages not built)
+- Tag filtering (links exist but pages not built)
+- Search functionality
 
 ### ✅ Completed
 
@@ -65,7 +74,7 @@ npm run dev
 #### 4. Authentication System
 - [x] `app/auth/login/page.tsx` - Login page with Supabase Auth
 - [x] `app/auth/signup/page.tsx` - Signup page with profile creation
-- [x] `proxy.ts` - Route protection for authenticated routes
+- [x] `middleware.ts` - Route protection for authenticated routes (renamed from proxy.ts)
 - [x] `components/Navigation.tsx` - Navigation with auth state
 - [x] Root layout updated with navigation
 - [x] Username validation and uniqueness checking
@@ -85,12 +94,38 @@ npm run dev
 - [x] Database insertion working
 - [x] User authentication check before creation
 
-#### 6. Files Created
+#### 6. Kernel Viewing & Display
+- [x] `app/page.tsx` - Home feed with kernel list
+  - Fetches kernels with author info
+  - Calculates fork counts
+  - Displays in grid layout
+  - Empty state for no kernels
+  - Loading from database
+- [x] `components/KernelCard.tsx` - Reusable kernel display card
+  - Title, excerpt, author
+  - Tags (clickable)
+  - Fork badge if derivative
+  - Fork count display
+  - Relative date formatting
+  - Hover effects
+  - Fork button
+- [x] `app/kernel/[id]/page.tsx` - Kernel detail view
+  - Full kernel content
+  - Parent kernel display (if forked)
+  - Child kernels list (forks)
+  - Edit button (owner only)
+  - Fork button
+  - License info
+  - Author attribution
+  - Back navigation
+
+#### 7. Files Created
 - `app/layout.tsx` - Root layout with navigation
-- `app/page.tsx` - Placeholder home page
+- `app/page.tsx` - Home feed with kernels
 - `app/auth/login/page.tsx` - Login page
 - `app/auth/signup/page.tsx` - Signup page
 - `app/kernel/new/page.tsx` - Create kernel page
+- `app/kernel/[id]/page.tsx` - Kernel detail page
 - `app/globals.css` - Global styles
 - `lib/supabase/client.ts` - Browser Supabase client
 - `lib/supabase/server.ts` - Server Supabase client
@@ -99,7 +134,8 @@ npm run dev
 - `components/ui/card.tsx` - shadcn/ui card
 - `components/Navigation.tsx` - Global navigation
 - `components/KernelForm.tsx` - Reusable kernel form
-- `proxy.ts` - Authentication middleware (Next.js 16)
+- `components/KernelCard.tsx` - Kernel display card
+- `middleware.ts` - Authentication middleware
 - `supabase/migrations/20241024_initial_schema.sql` - Initial schema migration
 - `.env.example` - Environment template
 
@@ -107,29 +143,24 @@ npm run dev
 
 Nothing currently in progress.
 
-### ❌ Not Started (65% of MVP remaining)
+### ❌ Not Started (45% of MVP remaining)
 
-#### Priority 2: Core Components (~2 hours)
-- [ ] `components/KernelCard.tsx` - Reusable kernel display card
-- [ ] `components/KernelTree.tsx` - Fork ancestry visualization
+#### Priority 1: Forking & Editing (~3 hours)
+- [ ] `app/kernel/[id]/fork/page.tsx` - Fork existing kernel (use existing KernelForm)
+- [ ] `app/kernel/[id]/edit/page.tsx` - Edit own kernels (use existing KernelForm)
+- [ ] Test forking and editing flow
 
-#### Priority 3: Kernel Viewing & Forking (~5 hours)
-- [ ] Update `app/page.tsx` - Home feed with kernels list
-- [ ] `app/kernel/[id]/page.tsx` - View kernel detail
-- [ ] `app/kernel/[id]/fork/page.tsx` - Fork existing kernel
-- [ ] `app/kernel/[id]/edit/page.tsx` - Edit own kernels
-- [ ] Test viewing, forking flow
-
-#### Priority 4: User Profiles (~2 hours)
+#### Priority 2: User Profiles (~3 hours)
 - [ ] `app/profile/[username]/page.tsx` - User profile with kernels
 - [ ] Profile editing functionality
+- [ ] `components/KernelTree.tsx` - Fork ancestry visualization (optional)
 
-#### Priority 5: Discovery (~2 hours)
+#### Priority 3: Discovery (~2 hours)
 - [ ] Search functionality
 - [ ] Tag filtering
 - [ ] `app/tags/[tag]/page.tsx` - Tag-filtered kernels
 
-#### Priority 6: Polish (~3 hours)
+#### Priority 4: Polish (~3 hours)
 - [ ] Responsive design testing
 - [ ] Loading states
 - [ ] Error states
