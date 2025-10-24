@@ -46,6 +46,12 @@ export default async function proxy(request: NextRequest) {
     return NextResponse.redirect(redirectUrl);
   }
 
+  // If logged in and accessing auth pages, redirect to home
+  if (user && (request.nextUrl.pathname === "/auth/login" || request.nextUrl.pathname === "/auth/signup")) {
+    const redirectUrl = new URL("/", request.url);
+    return NextResponse.redirect(redirectUrl);
+  }
+
   return supabaseResponse;
 }
 

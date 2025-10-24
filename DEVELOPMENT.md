@@ -6,7 +6,7 @@ Last updated: 2025-10-24
 
 Building a collaborative world-building platform (MVP) for creative writing students. See [specification.md](specification.md) for complete requirements.
 
-## Current Status: Infrastructure Complete (15% of MVP)
+## Current Status: Authentication Complete (25% of MVP)
 
 ### ✅ Completed
 
@@ -33,30 +33,37 @@ Building a collaborative world-building platform (MVP) for creative writing stud
 - [x] Helper types for Kernel, Profile, KernelWithAuthor, KernelWithRelations
 - [x] Supabase clients configured (browser + server)
 
-#### 4. Files Created
-- `app/layout.tsx` - Root layout (basic)
+#### 4. Authentication System
+- [x] `app/auth/login/page.tsx` - Login page with Supabase Auth
+- [x] `app/auth/signup/page.tsx` - Signup page with profile creation
+- [x] `proxy.ts` - Route protection for authenticated routes
+- [x] `components/Navigation.tsx` - Navigation with auth state
+- [x] Root layout updated with navigation
+- [x] Username validation and uniqueness checking
+- [x] Redirect logic for protected routes
+- [x] Auto-redirect logged-in users away from auth pages
+
+#### 5. Files Created
+- `app/layout.tsx` - Root layout with navigation
 - `app/page.tsx` - Placeholder home page
+- `app/auth/login/page.tsx` - Login page
+- `app/auth/signup/page.tsx` - Signup page
 - `app/globals.css` - Global styles
 - `lib/supabase/client.ts` - Browser Supabase client
 - `lib/supabase/server.ts` - Server Supabase client
 - `lib/utils.ts` - Utility functions
 - `components/ui/button.tsx` - shadcn/ui button
 - `components/ui/card.tsx` - shadcn/ui card
+- `components/Navigation.tsx` - Global navigation
+- `proxy.ts` - Authentication middleware (Next.js 16)
 - `supabase/migrations/20241024_initial_schema.sql` - Initial schema migration
-- `.env.local` - Environment variables (not in git)
 - `.env.example` - Environment template
 
 ### 🚧 In Progress
 
 Nothing currently in progress.
 
-### ❌ Not Started (85% of MVP remaining)
-
-#### Priority 1: Authentication (~2 hours)
-- [ ] `app/auth/login/page.tsx` - Login page
-- [ ] `app/auth/signup/page.tsx` - Signup page with profile creation
-- [ ] `middleware.ts` - Route protection middleware
-- [ ] Test auth flow end-to-end
+### ❌ Not Started (75% of MVP remaining)
 
 #### Priority 2: Core Components (~3 hours)
 - [ ] `components/KernelCard.tsx` - Reusable kernel display card
@@ -206,7 +213,7 @@ npm run dev
 ## Timeline Estimate (from specification)
 
 - ~~Setup (Supabase + Next.js): 1 hour~~ ✅
-- Authentication pages: 2 hours
+- ~~Authentication pages: 2 hours~~ ✅
 - ~~Database schema + RLS: 2 hours~~ ✅
 - Kernel create/view pages: 4 hours
 - Fork functionality: 3 hours
@@ -216,19 +223,23 @@ npm run dev
 - Testing + bug fixes: 3 hours
 - Deployment: 1 hour
 
-**Total**: ~23 hours (3 hours complete, 20 hours remaining)
+**Total**: ~23 hours (5 hours complete, 18 hours remaining)
 
 ## Next Session Priorities
 
-1. **Authentication** - Build login/signup pages (blocking everything else)
-2. **KernelCard Component** - Most reused component
-3. **Home Feed** - Test data flow with real UI
-4. **Create Kernel** - Enable content creation
+1. **KernelCard Component** - Reusable component for displaying kernels
+2. **Create Kernel Page** - Enable content creation (`/kernel/new`)
+3. **Home Feed** - Display actual kernels from database
+4. **Kernel Detail View** - View individual kernels (`/kernel/[id]`)
 
 ## Notes for Future Sessions
 
+- **IMPORTANT**: Create `.env.local` file with Supabase credentials before running dev server
+  - Copy from `.env.example` and fill in your Supabase URL and anon key
+  - Get credentials from https://supabase.com/dashboard/project/tkcruglusoqwhoizsbnw/settings/api
 - Supabase CLI is configured and working
 - Migration files are in `supabase/migrations/`
 - Database password: WorldKernel2024!SecureDB (for reference)
 - All RLS policies are in place and tested
 - Type generation: `supabase gen types typescript --project-id tkcruglusoqwhoizsbnw`
+- Authentication system is complete and ready to test once env vars are set
