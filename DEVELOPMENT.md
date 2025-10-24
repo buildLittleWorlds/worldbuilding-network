@@ -6,7 +6,36 @@ Last updated: 2025-10-24
 
 Building a collaborative world-building platform (MVP) for creative writing students. See [specification.md](specification.md) for complete requirements.
 
-## Current Status: Authentication Complete (25% of MVP)
+## Current Status: Create Kernel Functional (35% of MVP)
+
+### 🧪 Ready for Testing!
+
+**Complete end-to-end flow is now functional:**
+1. ✅ Sign up with email/password/username
+2. ✅ Log in to existing account
+3. ✅ Click "New Kernel" button in navigation
+4. ✅ Fill out kernel form (title, description, tags, license)
+5. ✅ Submit → saves to database → redirects to home
+6. ✅ Kernels are stored in Supabase (view in dashboard)
+
+**To test:**
+```bash
+npm run dev
+# Visit http://localhost:3000
+# Create an account, then create a kernel!
+```
+
+**What's working:**
+- Full authentication flow
+- Kernel creation with validation
+- Data persistence to Supabase
+- Route protection
+
+**What's not ready yet:**
+- Home page feed (kernels are saved but not displayed)
+- Viewing individual kernels
+- Forking kernels
+- User profiles
 
 ### ✅ Completed
 
@@ -43,11 +72,25 @@ Building a collaborative world-building platform (MVP) for creative writing stud
 - [x] Redirect logic for protected routes
 - [x] Auto-redirect logged-in users away from auth pages
 
-#### 5. Files Created
+#### 5. Kernel Creation
+- [x] `components/KernelForm.tsx` - Reusable form component
+  - Title validation (200 char max)
+  - Description validation (5000 char max)
+  - Tag parsing (max 10 tags, 30 chars each)
+  - License selection
+  - Character counters
+  - Markdown support
+  - Works for create/fork/edit modes
+- [x] `app/kernel/new/page.tsx` - Create new kernel
+- [x] Database insertion working
+- [x] User authentication check before creation
+
+#### 6. Files Created
 - `app/layout.tsx` - Root layout with navigation
 - `app/page.tsx` - Placeholder home page
 - `app/auth/login/page.tsx` - Login page
 - `app/auth/signup/page.tsx` - Signup page
+- `app/kernel/new/page.tsx` - Create kernel page
 - `app/globals.css` - Global styles
 - `lib/supabase/client.ts` - Browser Supabase client
 - `lib/supabase/server.ts` - Server Supabase client
@@ -55,6 +98,7 @@ Building a collaborative world-building platform (MVP) for creative writing stud
 - `components/ui/button.tsx` - shadcn/ui button
 - `components/ui/card.tsx` - shadcn/ui card
 - `components/Navigation.tsx` - Global navigation
+- `components/KernelForm.tsx` - Reusable kernel form
 - `proxy.ts` - Authentication middleware (Next.js 16)
 - `supabase/migrations/20241024_initial_schema.sql` - Initial schema migration
 - `.env.example` - Environment template
@@ -63,20 +107,18 @@ Building a collaborative world-building platform (MVP) for creative writing stud
 
 Nothing currently in progress.
 
-### ❌ Not Started (75% of MVP remaining)
+### ❌ Not Started (65% of MVP remaining)
 
-#### Priority 2: Core Components (~3 hours)
+#### Priority 2: Core Components (~2 hours)
 - [ ] `components/KernelCard.tsx` - Reusable kernel display card
-- [ ] `components/KernelForm.tsx` - Create/edit kernel form
-- [ ] `components/Navigation.tsx` - Global navigation with auth state
 - [ ] `components/KernelTree.tsx` - Fork ancestry visualization
 
-#### Priority 3: Kernel CRUD (~6 hours)
+#### Priority 3: Kernel Viewing & Forking (~5 hours)
 - [ ] Update `app/page.tsx` - Home feed with kernels list
-- [ ] `app/kernel/new/page.tsx` - Create new kernel
 - [ ] `app/kernel/[id]/page.tsx` - View kernel detail
 - [ ] `app/kernel/[id]/fork/page.tsx` - Fork existing kernel
-- [ ] Test kernel creation, viewing, forking flow
+- [ ] `app/kernel/[id]/edit/page.tsx` - Edit own kernels
+- [ ] Test viewing, forking flow
 
 #### Priority 4: User Profiles (~2 hours)
 - [ ] `app/profile/[username]/page.tsx` - User profile with kernels
